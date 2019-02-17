@@ -1,0 +1,10 @@
+import strategies.cdnnc
+import strategies.sdnnc
+import strategies.bayes
+import strategies.knn
+import strategies.svm
+import strategies.tree
+import strategies.forest
+import strategies.linear
+import strategies.logistic
+import strategies.zeror
