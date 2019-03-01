@@ -28,7 +28,9 @@ We additionally note that the second half of the `--strategy` switch expects a w
 
 ### Contribution
 
-If you would like to contribute, contact Rudolf Ferenc <zealot@inf.u-szeged.hu> and Dénes Bán <zealot@inf.u-szeged.hu> and we'll figure something out. PRs welcome.
+If you would like to contribute, contact [Rudolf Ferenc] and [Dénes Bán], and we'll figure something out. PRs welcome.
+[Rudolf Ferenc] https://github.com/ferencr
+[Dénes Bán] https://github.com/mrzealot
 
 
 ## License
