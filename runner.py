@@ -15,9 +15,9 @@ shared = {
     'clean': False,
     'seed': 1337,
     'output': os.path.abspath('output'),
-    'resample': 'none',
-    'resample_amount': 100,
-    'device': '/device:CPU:0'
+    'device': '/device:CPU:0',
+    'log_device': False,
+    'calc_completeness': True
 }
 
 data_steps = [
@@ -32,6 +32,8 @@ data_steps = [
     # },
     {
         'preprocess': [['features', 'standardize'], ['labels', 'binarize']],
+        'resample': 'down',
+        'resample_amount': 100
     },
 
     # resample method/amount
@@ -81,13 +83,16 @@ data_steps = [
 basic_strategy = [
     # ['knn', ''],
     # ['bayes', ''],
+    # ['logistic', '--penalty l2 --solver saga --C 0.2 --tol 0.0001']
     # ['svm', ''],
     # ['forest', ''],
     # ['tree', ''],
-    # ['linear', ''],
+    # ['tree', '--max-depth 5']
+    ['linear', ''],
     # ['logistic', ''],
     # ['zeror', ''],
-    ['sdnnc', '--layers 3 --neurons 100 --batch 100 --epochs 5 --lr 0.1']
+    # ['sdnnc', '--layers 3 --neurons 100 --batch 100 --epochs 5 --lr 0.1']
+    # ['forest', '--max-depth 10 --criterion entropy --n-estimators 5']
 ]
 
 chosen_prep = {

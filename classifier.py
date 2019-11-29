@@ -68,7 +68,7 @@ def create_classifier(args):
             # Save checkpoints exactly once per epoch
             save_checkpoints_steps=args['steps_per_epoch'],
             device_fn=lambda op: args['device'],
-            session_config=tf.ConfigProto()
+            session_config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=args['log_device'])
         ),
         model_dir=args['model_dir'],
         warm_start_from=args['warm_start_dir']

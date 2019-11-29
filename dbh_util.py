@@ -1,7 +1,11 @@
 import os
 import stat
 import shutil
+import copy
+import datetime
+import numpy as np
 
+import strategies
 from sklearn.metrics import confusion_matrix
 
 def mkdir(dir_name, clean=False):
@@ -45,3 +49,32 @@ def sklearn_wrapper(train, dev, test, alg, threshold=None):
     dev_res = sklearn_eval(classifier, dev, threshold)
     test_res = sklearn_eval(classifier, test, threshold)
     return train_res, dev_res, test_res, classifier
+
+def _numpy_to_pytype(obj):
+    if isinstance(obj, np.generic):
+        return np.asscalar(obj)
+    else:
+        return obj
+        
+def create_doc(args, strategy, sargs_str, train_stats, dev_stats, test_stats, feature_desc=None):
+    doc_json = dict()
+    params = copy.deepcopy(args)
+    del params['strategy']
+    if hasattr(getattr(strategies, strategy), 'parser'):
+        parser = getattr(strategies, strategy).parser
+        sargs = parse(parser, sargs_str.split())
+    else:
+        sargs = {}
+    all_args_str = " ".join(["--" + arg + " " + str(val) for arg, val in sargs.items()])
+    sargs['cmd_line'] = all_args_str
+    doc_json = {
+        'timestamp': datetime.datetime.now(),
+        'common_args': params,
+        'strategy': strategy,
+        'strategy_args': sargs,
+        'trains_stats': {k: _numpy_to_pytype(v) for k, v in train_stats.items()},
+        'dev_stats': {k: _numpy_to_pytype(v) for k, v in dev_stats.items()},
+        'test_stats': {k: _numpy_to_pytype(v) for k, v in test_stats.items()},
+        'feature_desc': feature_desc
+    }
+    return doc_json

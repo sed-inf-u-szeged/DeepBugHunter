@@ -16,8 +16,15 @@ def standardize(features, labels):
     return features[features.columns].apply(lambda col: (col - col.mean()) / col.std()), labels
 
 def binarize(features, labels):
+    # store original labels
+    global orig_labels
+    orig_labels = {features.index[i]:labels.iloc[i] for i in range(len(features))}
+    
     # map to boolean
     return features, labels.map(lambda x: 1 if x > 0 else 0)
+
+def get_orig_labels(features):
+    return [orig_labels[features.index[i]] for i in range(len(features))]
 
 def resample(features, labels, mode, amount, seed):
 

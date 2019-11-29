@@ -36,6 +36,11 @@ parser.add_argument('--sandbox', default=os.path.abspath('sandbox'), help='Inter
 # Simple DNN classification for a set number of epochs
 #
 
+def predict(classifier, test, args, sargs_str):
+    sargs = util.parse(parser, sargs_str.split())
+    preds = classifier.predict(input_fn=lambda:pandas2tf.eval_input_fn(test, sargs['batch']))
+    return [pred['class_ids'] for pred in preds]
+
 def learn(train, dev, test, args, sargs_str):
 
     # Read strategy-specific args

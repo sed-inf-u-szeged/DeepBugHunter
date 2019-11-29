@@ -1,4 +1,5 @@
 import os
+import shutil
 import math
 import logging
 import argparse
@@ -36,6 +37,11 @@ parser.add_argument('--sandbox', default=os.path.abspath('sandbox'), help='Inter
 # with a reduced (halved) learning rate
 #
 
+def predict(classifier, test, args, sargs_str):
+    sargs = util.parse(parser, sargs_str.split())
+    preds = classifier.predict(input_fn=lambda:pandas2tf.eval_input_fn(test, sargs['batch']))
+    return [pred['class_ids'] for pred in preds]
+    
 def learn(train, dev, test, args, sargs_str):
 
     # Read strategy-specific args
@@ -95,6 +101,13 @@ def learn(train, dev, test, args, sargs_str):
             miss_streak += 1
             misses += 1
             log('Miss #' + str(misses) + ', (streak = ' + str(miss_streak) + ')')
+        
+        # Cleanup sandbox not to run out of space due to models
+        for m_dir in os.listdir(sargs['sandbox']):
+            abs_m_dir = os.path.join(sargs['sandbox'], m_dir)
+            if best_model_dir != abs_m_dir and model_dir != abs_m_dir:
+                tf.summary.FileWriterCache.clear()
+                shutil.rmtree(abs_m_dir)                
 
     final_result_train = best_classifier.evaluate(input_fn=lambda:pandas2tf.eval_input_fn(train, sargs['batch']))
     final_result_dev = best_classifier.evaluate(input_fn=lambda:pandas2tf.eval_input_fn(dev, sargs['batch']))
