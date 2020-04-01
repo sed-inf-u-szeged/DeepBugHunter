@@ -35,4 +35,10 @@ If you would like to contribute, contact [Rudolf Ferenc](https://github.com/fere
 
 DeepBugHunter is licensed under the Apache License 2.0 (see the LICENSE file).
 
-If you find this tool useful, please drop us a message.
+If you find this tool useful, please cite the following article and drop us a message.
+
+*Rudolf Ferenc, Dénes Bán, Tamás Grósz, and Tibor Gyimóthy:*
+
+**Deep learning in static, metric-based bug prediction**
+
+https://doi.org/10.1016/j.array.2020.100021
