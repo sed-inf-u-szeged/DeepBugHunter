@@ -2,10 +2,10 @@ import tensorflow as tf
 
 # Matthew's correlation coefficient
 def mcc(labels, preds):
-    tp, tp_update = tf.metrics.true_positives(labels, preds)
-    tn, tn_update = tf.metrics.true_negatives(labels, preds)
-    fp, fp_update = tf.metrics.false_positives(labels, preds)
-    fn, fn_update = tf.metrics.false_negatives(labels, preds)
+    tp, tp_update = tf.compat.v1.metrics.true_positives(labels, preds)
+    tn, tn_update = tf.compat.v1.metrics.true_negatives(labels, preds)
+    fp, fp_update = tf.compat.v1.metrics.false_positives(labels, preds)
+    fn, fn_update = tf.compat.v1.metrics.false_negatives(labels, preds)
     eps = 1e-7
 
     num = (tp * tn - fp * fn)
@@ -15,8 +15,8 @@ def mcc(labels, preds):
 
 # F-Measure
 def fmes(labels, preds):
-    precision, precision_update = tf.metrics.precision(labels, preds)
-    recall, recall_update = tf.metrics.recall(labels, preds)
+    precision, precision_update = tf.compat.v1.metrics.precision(labels, preds)
+    recall, recall_update = tf.compat.v1.metrics.recall(labels, preds)
     eps = 1e-7
 
     num = (2 * precision * recall)
