@@ -199,6 +199,7 @@ def main(args):
     for (strategy, sargs) in args['strategy']:
 
         strategy_i += 1
+        args["strategy_i"] = strategy_i
         logger.info('(%d/%d) Strategy "%s" started with args: <%s>', strategy_i, strategy_cnt, strategy, sargs)
 
         # Aggregate confusion matrices
@@ -209,15 +210,17 @@ def main(args):
         # For each fold
         fold_generator = preprocess.split(data, folds=FOLDS, seed=args['seed'])
         fold_i = 0
+        args['model_path'] = "empty"
         for remainder, test in fold_generator():
             fold_i += 1
+            args["fold_i"] = fold_i
 
             # A single dev split
             # Not fully fair, but fairer...
             train, dev = next(preprocess.split(remainder, folds=FOLDS, seed=args['seed'])())
             
             # Resample the training set
-            if args['resample'] is not 'none':
+            if args['resample'] != 'none':
                 train = preprocess.resample(*train, mode=args['resample'], amount=args['resample_amount'], seed=args['seed'])
 
             # Evalute according to the current strategy

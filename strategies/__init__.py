@@ -8,3 +8,4 @@ import strategies.forest
 import strategies.linear
 import strategies.logistic
 import strategies.zeror
+import strategies.keras

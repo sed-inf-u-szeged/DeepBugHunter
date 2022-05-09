@@ -88,10 +88,11 @@ basic_strategy = [
     # ['forest', ''],
     # ['tree', ''],
     # ['tree', '--max-depth 5']
-    ['linear', ''],
+    # ['linear', ''],
     # ['logistic', ''],
     # ['zeror', ''],
-    # ['sdnnc', '--layers 3 --neurons 100 --batch 100 --epochs 5 --lr 0.1']
+    ['keras', '--layers 5 --neurons 1024 --batch 16 --epochs 10 --lr 0.1'],
+    ['sdnnc', '--layers 5 --neurons 1024 --batch 16 --epochs 10 --lr 0.1']
     # ['forest', '--max-depth 10 --criterion entropy --n-estimators 5']
 ]
 
